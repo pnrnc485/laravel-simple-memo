@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Memo;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('create');
+    }
+
+    public function store(Request $request)
+    {
+        $posts = $request->all();
+        // dump dieの略 - メソッドの引数を撮った値を展開して止める
+
+        Memo::insert(['content' => $posts['content'], 'user_id' => \Auth::id()]);
+        return redirect( route('home') );
     }
 }
